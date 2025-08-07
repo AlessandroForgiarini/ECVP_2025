@@ -148,7 +148,7 @@ public class GoblinController : MonoBehaviour
     {
         if (newState == _currentState)
         {
-            Debug.LogWarning($"Same state provided [{newState}], not doing anything");
+//            Debug.LogWarning($"Same state provided [{newState}], not doing anything");
             return;
         }
         _currentState = newState;
@@ -346,7 +346,7 @@ public class GoblinController : MonoBehaviour
 
     private void Banish(bool byPlayer = false)
     {
-        Debug.Log($"{transform.GetInstanceID()} is being banished.");
+        // Debug.Log($"{transform.GetInstanceID()} is being banished.");
         _goblinBanished = true;
         ChangeState(State.BANISHED);
         

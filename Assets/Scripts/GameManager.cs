@@ -25,14 +25,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ColorFilterSO colorFiltersSo;
     [SerializeField] private LevelSO currentLevelSo;
     [SerializeField] private ElementsListSO elementsListSo;
-    [Header("Prefabs")]
-    [SerializeField] private GameObject crystalsPrefab;
     
     private List<LevelSO.GoblinWaveData> _goblinWaves;
     private float _timeBetweenWaves;
     
     private GoblinSpawner _goblinSpawner;
     private UserInterfaceManager _interfaceManager;
+    private CrystalGenerator _crystalGenerator;
     
     private GameState _currentState = GameState.Loading;
     private int _currentGoblinWaveIndex;
@@ -42,19 +41,22 @@ public class GameManager : MonoBehaviour
     private int _totalGoblinsToBanishToRemoveFilter;
     private int _stolenCrystals;
     private int _totalCrystals;
+    private bool _firstGame;
     
     private void Awake()
     {
         Instance = this;
         _goblinWaves = currentLevelSo.goblinWaves;
-        ResetCrystals();
+        _firstGame = true;
     }
 
     private void Start()
     {
         _goblinSpawner = GameObject.Find("GoblinSpawner").GetComponent<GoblinSpawner>();
-        _interfaceManager =  GameObject.Find("GameUserInterface").GetComponent<UserInterfaceManager>();
-        
+        _interfaceManager = GameObject.Find("GameUserInterface").GetComponent<UserInterfaceManager>();
+        _crystalGenerator = GameObject.Find("CrystalGenerator").GetComponent<CrystalGenerator>();
+        ResetCrystals();
+
         LoadMainMenu();
     }
     
@@ -67,14 +69,14 @@ public class GameManager : MonoBehaviour
             case GameState.WaitToPlay:
                 break;
             case GameState.Playing:
-                if (_goblinBanishedCount == _totalGoblinToBanish)
-                {
-                    GameOverWin();
-                } 
-                else if (_totalCrystals == _stolenCrystals)
+                if (_totalCrystals == _stolenCrystals)
                 {
                     GameOverLost();
                 }
+                else if (_goblinBanishedCount == _totalGoblinToBanish)
+                {
+                    GameOverWin();
+                } 
                 else if (_goblinSpawner.SpawnedAllGoblins && _currentGoblinWaveIndex < _goblinWaves.Count - 1)
                 {
                     _waitToSpawnTimer = 0;
@@ -82,14 +84,14 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.WaitToSpawn:
-                if (_goblinBanishedCount == _totalGoblinToBanish)
-                {
-                    GameOverWin();
-                } 
-                else if (_totalCrystals == _stolenCrystals)
+                if (_totalCrystals == _stolenCrystals)
                 {
                     GameOverLost();
                 }
+                else if (_goblinBanishedCount == _totalGoblinToBanish)
+                {
+                    GameOverWin();
+                } 
                 else
                 {
                     _waitToSpawnTimer += Time.deltaTime;
@@ -154,9 +156,23 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        ResetCrystals();
         DestroyAllBalls();
+
+        if (!_firstGame)
+        {
+            ResetCrystals();
+        }
         
+        PrepareGoblins();
+
+        _timeBetweenWaves = currentLevelSo.timeBetweenWaves;
+        LoadGoblinWave(0);
+        
+        UpdateState(GameState.Playing);
+    }
+
+    private void PrepareGoblins()
+    {
         foreach (LevelSO.GoblinWaveData waveData in _goblinWaves)
         {
             _totalGoblinToBanish += waveData.totalGoblins;
@@ -164,32 +180,18 @@ public class GameManager : MonoBehaviour
         
         _totalGoblinsToBanishToRemoveFilter = 0;
         _goblinBanishedCount = 0;
-        _timeBetweenWaves = currentLevelSo.timeBetweenWaves;
-        
-        LoadGoblinWave(0);
         _stolenCrystals = 0;
-        _totalCrystals = GameObject.FindGameObjectsWithTag("Crystal").Length;
-
-        UpdateState(GameState.Playing);
     }
 
     private void ResetCrystals()
     {
         foreach (var o in GameObject.FindGameObjectsWithTag("Crystal"))
         {
-            Destroy(o);
+            DestroyImmediate(o);
         }
-        
-        Vector3 crystalsPos = Vector3.zero;
-        GameObject crystalsContainerInScene = GameObject.FindGameObjectWithTag("CollectibleCrystals");
-        
-        if (crystalsContainerInScene != null)
-        {
-            crystalsPos = crystalsContainerInScene.transform.position;
-            Destroy(crystalsContainerInScene);
-        }
-        
-        Instantiate(crystalsPrefab, crystalsPos, Quaternion.identity);
+
+        _totalCrystals = currentLevelSo.totalCrystals;
+        _crystalGenerator.GenerateCrystals(_totalCrystals);
     }
     public void ApplyFilter(ColorBlindMode mode)
     {
@@ -214,6 +216,9 @@ public class GameManager : MonoBehaviour
     
     public void GameOver(bool win)
     {
+        Debug.Log($"Total Crystals: {_totalCrystals}, Total Goblins to Banish: {_totalGoblinToBanish}");
+        Debug.Log($"Stolen Crystals: {_stolenCrystals}, Goblins Banished: {_goblinBanishedCount}");
+        _firstGame = false;
         RemoveFilter();
         DestroyAllBalls();
         DestroyAllGoblins();

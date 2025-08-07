@@ -58,7 +58,7 @@ public class GoblinSpawner : MonoBehaviour
  
         Vector3 position = spawnTransformPoint.position;
         Quaternion rotation = Quaternion.identity;
-        GoblinController spawnedGoblin = Instantiate(goblinPrefab, position, rotation);
+        GoblinController spawnedGoblin = Instantiate(goblinPrefab, position, rotation, transform);
         
         spawnedGoblin.Init(spawnTransformPoint, spawnElement);
     }

@@ -36,7 +36,7 @@ public class BallSpawner : MonoBehaviour
         TrackedPoseDriver controller = other.gameObject.GetComponentInParent<TrackedPoseDriver>();
         
         if (controller == null) return;
-        
+
         BallHandler ballReference = GetNewBall();
         ballReference.DisableVisuals();
         _ballReference = ballReference;
@@ -45,7 +45,7 @@ public class BallSpawner : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         TrackedPoseDriver controller = other.gameObject.GetComponentInParent<TrackedPoseDriver>();
-        
+
         if (controller == null) return;
         if (_ballReference == null) return;
         if (_ballReference.PickedUp) return;
@@ -56,7 +56,7 @@ public class BallSpawner : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         TrackedPoseDriver controller = other.gameObject.GetComponentInParent<TrackedPoseDriver>();
-        
+
         if (controller == null) return;
         if (_ballReference == null) return;
         if (_ballReference.PickedUp) return;

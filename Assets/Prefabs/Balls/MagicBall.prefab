@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4465664918549480418}
   - component: {fileID: 6668189986182301866}
   - component: {fileID: 7240571604934278649}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: VFX_Ground_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4842,7 +4842,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4570580902616716989}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: BallVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4881,7 +4881,7 @@ GameObject:
   - component: {fileID: 4813220995133474914}
   - component: {fileID: 8519440801830668881}
   - component: {fileID: 6725014789010316864}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: MagicBall
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -5156,7 +5156,7 @@ GameObject:
   - component: {fileID: 5471364988307014082}
   - component: {fileID: 295234261984723222}
   - component: {fileID: 7553873048337903886}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: VFX_Ground_Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9988,7 +9988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7588587562743878817}
   - component: {fileID: 3928572878162075569}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: BallAudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10181,7 +10181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1f24e74d5a946ec47a3f24e3df138c14, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10212,7 +10212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2263400886593003554, guid: 0cd9e54cc4fc33042988600b5948fbdb, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2263400886593003554, guid: 0cd9e54cc4fc33042988600b5948fbdb, type: 3}
       propertyPath: m_IsActive

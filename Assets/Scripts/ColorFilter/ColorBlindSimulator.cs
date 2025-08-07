@@ -26,13 +26,9 @@ public class ColorBlindSimulator : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
-
-    private void Start()
-    {
         _activeFilter = ColorBlindMode.None;
         
-        _volume =  GetComponent<Volume>();
+        _volume = GetComponent<Volume>();
         if (_volume == null)
         {
             Debug.LogError("Volume component is missing. Please add it to the GameObject.");

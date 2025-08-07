@@ -26,3 +26,4 @@ MonoBehaviour:
     timeToSpawnGoblin: 1
     availableElements: 010000000200000003000000
   timeBetweenWaves: 20
+  totalCrystals: 30

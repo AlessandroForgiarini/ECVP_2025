@@ -24,4 +24,5 @@ public class LevelSO : ScriptableObject
     
     public List<GoblinWaveData> goblinWaves;
     [Range(0,20)] public float timeBetweenWaves;
+    [Range(1, 30)] public int totalCrystals;
 }
