@@ -89,6 +89,7 @@ public class ColorFilterButtonUI : MonoBehaviour
             }
         }
 
+        if (ColorBlindSimulator.Instance == null) return;
         ColorBlindSimulator.Instance.ApplyFilter(filterMode, _currentStrength);
     }
 

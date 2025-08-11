@@ -26,12 +26,15 @@ public class BallHandler : MonoBehaviour
     private Vector3 _oldPosition;
     private float _currentBallVelocityMagnitude;
     private bool _hitHandled;
-    
+    private bool _canExplode;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _canExplode = false;
+        Init(transform.position, activeElementType);
     }
-    
+
     private void FixedUpdate()
     {
         if (transform.position.y < -1)
@@ -55,9 +58,10 @@ public class BallHandler : MonoBehaviour
     {
         UpdateVisual(activeElementType);
     }
-    
-    public void Init(Vector3 startingPosition, ElementType element)
+
+    public void Init(Vector3 startingPosition, ElementType element, bool canExplode=false)
     {
+        _canExplode = canExplode;
         // Reset ball properties
         _hitHandled = false;
         PickedUp = false;
@@ -65,7 +69,8 @@ public class BallHandler : MonoBehaviour
 
         activeElementType = element;
         UpdateVisual();
-        
+        StopExplosionVisual();
+
         // Placing in the correct Position
         transform.position = startingPosition;
         _oldPosition = startingPosition;
@@ -89,6 +94,8 @@ public class BallHandler : MonoBehaviour
     public void BallHitSomething()
     {
         if (_hitHandled) return;
+        if (!_canExplode) return;
+
         _hitHandled = true;
         _rigidbody.isKinematic = true;
         
@@ -178,16 +185,17 @@ public class BallHandler : MonoBehaviour
             particle.Play();
         }
 
-        Invoke(nameof(StopExplosion), explosionDuration);
+        // Invoke(nameof(StopExplosion), explosionDuration);
     }
 
-    private void StopExplosion()
+    private void StopExplosionVisual()
     {
         foreach (ParticleSystem particle in explosionParticles)
         {
             particle.Stop();
         }
     }
+
     #endregion
     
     #region Audio Effects
@@ -197,11 +205,13 @@ public class BallHandler : MonoBehaviour
         float scaledVelocity = throwSpeedMagnitude / velocityMaxAmplitudeEffect;
         // if velocity is over max scale down to 1
         float volume = Mathf.Min(1, scaledVelocity);
+        if (FantasyAudioManager.Instance == null) return;
         FantasyAudioManager.Instance.PlayEffect(audioSource, ballData.throwEffect, volume);
     }
     
     public void PlayExplodeEffect()
     {
+        if (FantasyAudioManager.Instance == null) return;
         FantasyAudioManager.Instance.PlayEffect(audioSource, ballData.explodeEffect);
     }
     #endregion

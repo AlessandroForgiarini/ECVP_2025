@@ -193,14 +193,17 @@ public class GameManager : MonoBehaviour
         _totalCrystals = currentLevelSo.totalCrystals;
         _crystalGenerator.GenerateCrystals(_totalCrystals);
     }
+
     public void ApplyFilter(ColorBlindMode mode)
     {
+        if (ColorBlindSimulator.Instance == null) return;
         float intensity = colorFiltersSo.GetColorFilterData(mode).intensity;
         ColorBlindSimulator.Instance.ApplyFilter(mode, intensity);
     }
 
     public void RemoveFilter()
     {
+        if (ColorBlindSimulator.Instance == null) return;
         ColorBlindSimulator.Instance.ApplyFilter(ColorBlindMode.None);
     }
 

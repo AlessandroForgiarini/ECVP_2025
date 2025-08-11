@@ -27,7 +27,7 @@ public class BallSpawner : MonoBehaviour
     public BallHandler GetNewBall()
     {
         BallHandler ballHandler = Instantiate(ballPrefab);
-        ballHandler.Init(transform.position, spawnerElement);
+        ballHandler.Init(transform.position, spawnerElement, true);
         return ballHandler;
     }
     
