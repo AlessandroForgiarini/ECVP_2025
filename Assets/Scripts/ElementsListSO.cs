@@ -2,38 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class ElementsListSO : ScriptableObject
+namespace ECVP_2025_Unity_Workshop
 {
-    [Serializable]
-    public enum ElementType
+    [CreateAssetMenu]
+    public class ElementsListSO : ScriptableObject
     {
-        INVALID,
-        FIRE,
-        WATER,
-        GRASS
-    }
-
-    [Serializable]
-    public struct ElementData
-    {
-        public ElementType type;
-        public Color color;
-    }
-    
-    public List<ElementData> elements;
-
-    public Color GetColorFromElement(ElementType elementType)
-    {
-        Color color = Color.magenta;
-        foreach (ElementData element in elements)
+        [Serializable]
+        public enum ElementType
         {
-            if (elementType == element.type)
-            {
-                color = element.color;
-                break;
-            }
+            INVALID,
+            FIRE,
+            WATER,
+            GRASS
         }
-        return color;
+
+        [Serializable]
+        public struct ElementData
+        {
+            public ElementType type;
+            public Color color;
+        }
+
+        public List<ElementData> elements;
+
+        public Color GetColorFromElement(ElementType elementType)
+        {
+            Color color = Color.magenta;
+            foreach (ElementData element in elements)
+            {
+                if (elementType == element.type)
+                {
+                    color = element.color;
+                    break;
+                }
+            }
+            return color;
+        }
     }
 }

@@ -3809,9 +3809,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de964fae821846047b6e19b484a0b90a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crystalRadius: 0.2
   crystalPrefab: {fileID: 3093736794840710235, guid: c428a43798aeb0841a68bb79b883f0de, type: 3}
-  planeRenderer: {fileID: 9018007452100621807}
+  minSpacing: 0.2
+  spawnAreaRenderer: {fileID: 0}
 --- !u!1 &7777074037312052583
 GameObject:
   m_ObjectHideFlags: 0

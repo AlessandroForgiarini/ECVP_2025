@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
-public class CrystalDataSO : ScriptableObject
+namespace ECVP_2025_Unity_Workshop
 {
-    public int score;
+    [CreateAssetMenu]
+    public class CrystalDataSO : ScriptableObject
+    {
+        public int score;
+    }
 }

@@ -1,55 +1,58 @@
 using TMPro;
 using UnityEngine;
 
-public class GameOverUI : MonoBehaviour
+namespace ECVP_2025_Unity_Workshop
 {
-    [SerializeField] private TMP_Text reachedScoreText;
-    [SerializeField] private GameObject newHighScoreLabel;
-    [SerializeField] private GameObject youWinLabel;
-    [SerializeField] private GameObject youLoseLabel;
-
-    public void UpdateUI(int score, bool newHighScore, bool win)
+    public class GameOverUI : MonoBehaviour
     {
-        if (win)
+        [SerializeField] private TMP_Text reachedScoreText;
+        [SerializeField] private GameObject newHighScoreLabel;
+        [SerializeField] private GameObject youWinLabel;
+        [SerializeField] private GameObject youLoseLabel;
+
+        public void UpdateUI(int score, bool newHighScore, bool win)
         {
-            youWinLabel.SetActive(true);
-            youLoseLabel.SetActive(false);
+            if (win)
+            {
+                youWinLabel.SetActive(true);
+                youLoseLabel.SetActive(false);
+            }
+            else
+            {
+                youWinLabel.SetActive(false);
+                youLoseLabel.SetActive(true);
+            }
+
+            reachedScoreText.text = score.ToString();
+
+            if (newHighScore)
+            {
+                newHighScoreLabel.gameObject.SetActive(true);
+            }
+            else
+            {
+                newHighScoreLabel.gameObject.SetActive(false);
+            }
         }
-        else
+
+        public void PlayAgain()
         {
-            youWinLabel.SetActive(false);
-            youLoseLabel.SetActive(true);
+            GameManager.Instance.RestartGame();
         }
-        
-        reachedScoreText.text = score.ToString();
 
-        if (newHighScore)
+        public void ShowMainMenu()
         {
-            newHighScoreLabel.gameObject.SetActive(true);
+            GameManager.Instance.LoadMainMenu();
         }
-        else
+
+        public void ShowPanel()
         {
-            newHighScoreLabel.gameObject.SetActive(false);
+            gameObject.SetActive(true);
         }
-    }
 
-    public void PlayAgain()
-    {
-        GameManager.Instance.RestartGame();
-    }
-
-    public void ShowMainMenu()
-    {
-        GameManager.Instance.LoadMainMenu();
-    }
-
-    public void ShowPanel()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public void HidePanel()
-    {
-        gameObject.SetActive(false);
+        public void HidePanel()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

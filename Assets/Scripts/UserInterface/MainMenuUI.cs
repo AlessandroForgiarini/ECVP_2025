@@ -1,39 +1,42 @@
 using TMPro;
 using UnityEngine;
 
-public class MainMenuUI : MonoBehaviour
+namespace ECVP_2025_Unity_Workshop
 {
-    [SerializeField] private TMP_Text highScoreText;
-
-    public void UpdateHighScore(int currentHighScore)
+    public class MainMenuUI : MonoBehaviour
     {
-        highScoreText.text = currentHighScore.ToString();
-    }
+        [SerializeField] private TMP_Text highScoreText;
 
-    public void StartGame()
-    {
-        GameManager.Instance.StartGame();
-    }
-
-    public void ExitApplication()
-    {
-#if UNITY_EDITOR
-        if (UnityEditor.EditorApplication.isPlaying)
+        public void UpdateHighScore(int currentHighScore)
         {
-            UnityEditor.EditorApplication.isPlaying = false;
+            highScoreText.text = currentHighScore.ToString();
         }
+
+        public void StartGame()
+        {
+            GameManager.Instance.StartGame();
+        }
+
+        public void ExitApplication()
+        {
+#if UNITY_EDITOR
+            if (UnityEditor.EditorApplication.isPlaying)
+            {
+                UnityEditor.EditorApplication.isPlaying = false;
+            }
 #else
         Application.Quit();  
 #endif
-    }
+        }
 
-    public void ShowPanel()
-    {
-        gameObject.SetActive(true);
-    }
+        public void ShowPanel()
+        {
+            gameObject.SetActive(true);
+        }
 
-    public void HidePanel()
-    {
-        gameObject.SetActive(false);
+        public void HidePanel()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

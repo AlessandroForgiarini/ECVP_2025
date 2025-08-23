@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu()]
-public class BallDataSO : ScriptableObject
+namespace ECVP_2025_Unity_Workshop
 {
-    public float explosionRadius;
-    public int damage;
-    public AudioClip throwEffect;
-    public AudioClip explodeEffect;
+    [CreateAssetMenu()]
+    public class BallDataSO : ScriptableObject
+    {
+        public float explosionRadius;
+        public int damage;
+        public AudioClip throwEffect;
+        public AudioClip explodeEffect;
+    }
 }

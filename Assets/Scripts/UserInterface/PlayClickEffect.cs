@@ -1,16 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
-public class PlayClickEffect : MonoBehaviour
+namespace ECVP_2025_Unity_Workshop
 {
-    private void Awake()
+    [RequireComponent(typeof(Button))]
+    public class PlayClickEffect : MonoBehaviour
     {
-        Button btn = GetComponent<Button>();
-        btn.onClick.AddListener(delegate
+        private void Awake()
         {
-            FantasyAudioManager.Instance.PlayUIClickEffect();
-        });
+            Button btn = GetComponent<Button>();
+            btn.onClick.AddListener(delegate
+            {
+                FantasyAudioManager.Instance.PlayUIClickEffect();
+            });
+        }
     }
 }
-

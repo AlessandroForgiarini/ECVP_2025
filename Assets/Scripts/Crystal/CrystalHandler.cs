@@ -1,53 +1,56 @@
 ﻿using UnityEngine;
 
-public class CrystalHandler : MonoBehaviour
+namespace ECVP_2025_Unity_Workshop
 {
-    [SerializeField] private CrystalDataSO crystalData;
-
-    public bool IsFree { get; private set; }
-    private Transform _crystalsContainer;
-    private Vector3 _startingScale;
-    
-    private void Start()
+    public class CrystalHandler : MonoBehaviour
     {
-        GameObject containerGO = GameObject.Find("Crystals");
-        Transform container = containerGO == null ? transform.parent : containerGO.transform;
+        [SerializeField] private CrystalDataSO crystalData;
 
-        _crystalsContainer = container;
-        IsFree = true;
-    }
+        public bool IsFree { get; private set; }
+        private Transform _crystalsContainer;
+        private Vector3 _startingScale;
 
-    public int GetScore()
-    {
-        return crystalData.score;
-    }
-
-    public void ResetParent()
-    {
-        transform.SetParent(_crystalsContainer);
-        
-        IsFree = true;
-        if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5))
+        private void Start()
         {
-            transform.position = hit.point;
-            transform.up = Vector3.up;
+            GameObject containerGO = GameObject.Find("Crystals");
+            Transform container = containerGO == null ? transform.parent : containerGO.transform;
+
+            _crystalsContainer = container;
+            IsFree = true;
         }
 
-        transform.localScale = _startingScale;
-    }
+        public int GetScore()
+        {
+            return crystalData.score;
+        }
 
-    public void SetBackPackParent(Transform parent)
-    {
-        IsFree = false;
-        _startingScale = transform.localScale;
-        transform.localScale = _startingScale / 2;
-        transform.position = parent.position;
-        
-        transform.SetParent(parent);
-    }
-    
-    public Bounds GetCrystalBounds()
-    {
-        return transform.GetComponentInChildren<MeshRenderer>().bounds;
+        public void ResetParent()
+        {
+            transform.SetParent(_crystalsContainer);
+
+            IsFree = true;
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5))
+            {
+                transform.position = hit.point;
+                transform.up = Vector3.up;
+            }
+
+            transform.localScale = _startingScale;
+        }
+
+        public void SetBackPackParent(Transform parent)
+        {
+            IsFree = false;
+            _startingScale = transform.localScale;
+            transform.localScale = _startingScale / 2;
+            transform.position = parent.position;
+
+            transform.SetParent(parent);
+        }
+
+        public Bounds GetCrystalBounds()
+        {
+            return transform.GetComponentInChildren<MeshRenderer>().bounds;
+        }
     }
 }
